@@ -1,0 +1,10 @@
+{"page": "https://auto.ria.com/auto_subaru_forester_21460422.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_20540291.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_20306874.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_17084504.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_21366835.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_21290807.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_20043869.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_21286490.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_21386172.html"}
+{"page": "https://auto.ria.com/auto_subaru_forester_21427956.html"}

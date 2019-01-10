@@ -1,0 +1,1 @@
+export const TOOGLE_PRELOADER = 'TOOGLE_PRELOADER';
