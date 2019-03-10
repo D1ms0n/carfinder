@@ -1,39 +1,44 @@
 # -*- coding: utf-8 -*-
 
+""" Worker exetutes next operations:
+    1- Obtains a list of snoops from DB
+    2- Create a parser for each snoop
+    3- Runs parsers
+"""
+
 from parsers.autoria_parser import AutoRiaParser
-from datastore import SQLiteDatastore
+from datastore.datastore import SQLAlchemyAdapter
 
-class BaseWorker(object):
-    # Get all snoops
-    # For each snoop update car list
-    def find_new_cars(self):
-        raise NotImplementedError
+parser_classes = [AutoRiaParser, ]
+
+def get_parsers(**kwargs):
+    parsers = []
+    for cls in parser_classes:
+        parsers.append(cls(**kwargs))
+
+    return parsers
 
 
-class Worker(BaseWorker):
-    def __init__(self):
-        self.ds = SQLiteDatastore()
-        self.parsers = []
+def get_snoops_from_db():
+    ds = SQLAlchemyAdapter()
+    db_snoops = ds.getSnoops()
 
-    def _get_snoops_from_db(self):
-        db_snoops = self.ds.getSnoops()
+    parsers = []
+    for db_snoop in db_snoops:
+        ar_parser = AutoRiaParser(db_snoop)
+        parsers.append(ar_parser)
+        # rst_parser = RSTParser(db_snoop)      # TODO add rst parser
+        # self.parsers.append(rst_parser)
+    return parsers
 
-        for db_snoop in db_snoops:
-            ar_parser = AutoRiaParser(db_snoop)
-            self.parsers.append(ar_parser)
-            # rst_parser = RSTParser(db_snoop)      #Not implemented
-            # self.parsers.append(rst_parser)
-
-    def find_new_cars(self):
-        self._get_snoops_from_db()
-        for parser in self.parsers:
-            parser.get_cars()
-
+def find_new_cars():
+    parsers = get_snoops_from_db()
+    for parser in parsers:
+        parser.get_cars()
 
 
 if __name__ == "__main__":
-    worker = Worker()
-    worker.find_new_cars()
+    find_new_cars()
 
 
 

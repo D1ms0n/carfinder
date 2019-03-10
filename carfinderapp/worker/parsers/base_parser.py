@@ -11,6 +11,7 @@ from selenium.webdriver.chrome.options import Options
 
 # from datastore import SQLiteDatastore
 
+
 class BaseParser(object):
     # Init parser
     # Get first page url
@@ -33,6 +34,7 @@ class Parser(BaseParser):
         self.max_year = kwargs.get('max_year')
         self.min_year = kwargs.get('min_year')
 
+        self.manufacturers = dict()
         self.all_car_links = []
 
         #self.datastore = Datastore()

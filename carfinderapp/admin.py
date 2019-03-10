@@ -11,6 +11,11 @@ from .models import *
 
 
 # Register your models here.
+admin.site.register(Manufacturer)
+admin.site.register(ManufacturerId)
+admin.site.register(Model)
+admin.site.register(ModelId)
 admin.site.register(Snoop)
+admin.site.register(SnoopDetail)
 admin.site.register(Car)
 admin.site.register(CarToSnoopRelation)

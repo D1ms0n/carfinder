@@ -21,7 +21,7 @@ from django.conf import settings
 
 from django.contrib.auth import views as auth_views
 
-from carfinderapp import views as app_views
+from carfinderapp.views import views as app_views
 from carfinderapp.views import api_views as api_views
 
 urlpatterns = [
@@ -35,8 +35,10 @@ urlpatterns = [
     url(r'^api/snoops/$',                             api_views.SnoopList.as_view(),      name='snoops'),
     url(r'^api/snoops/(?P<pk>[0-9]+)/$',              api_views.SnoopDetail.as_view(),         name='snoop'),
 
+    url(r'^api/snoops/(?P<pk>[0-9]+)/cars/$',         api_views.SnoopCars.as_view(),         name='snoop'),
 
-    url(r'^api/cars/$',                             api_views.CarList.as_view(),           name='cars'),
+
+    # url(r'^api/cars/$',                             api_views.SnoopCars.as_view(),           name='cars'),
     url(r'^api/cars/(?P<pk>[0-9]+)/$',              api_views.CarDetail.as_view(),         name='car'),
 
      #url(r'^api/order_items/$',                        app_views.OrderItemList.as_view(),   name='order_items'),

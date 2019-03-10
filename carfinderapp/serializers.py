@@ -15,46 +15,74 @@ class UserSerializer(serializers.ModelSerializer):
                   'email'
                   )
 
-class _CarSerializer(serializers.ModelSerializer):
+class _ManufacturerSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Manufacturer
+        fields = (
+                  'manufacturer_name',
+                  )
+
+class _ModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Model
+        fields = (
+                  'model_name',
+                  )
+
+class CarSerializer(serializers.ModelSerializer):
+    # manufacturer_id =_ManufacturerNameSerializer()
+    # model_id = _ModelNameSerializer()
     class Meta:
         model = Car
         fields = ('pk',
-                  'manufacturer',
-                  'model',
+                  'manufacturer_id',
+                  'model_id',
                   'color',
                   'year',
                   'mileage',
                   )
 
+class SnoopDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SnoopDetail
+
+        fields = ('manufacturer',
+                  'model',
+                  'year_min',
+                  'year_max',
+                  'mileage_min',
+                  'mileage_max',
+                  )
 
 class SnoopSerializer(serializers.ModelSerializer):
+    details =SnoopDetailSerializer(many=True)
 
     class Meta:
         model = Snoop
-        fields = ('pk',
-                  'model',
-                  'manufacturer',
-                  'year_min',
-                  'year_max',
-                  'mileage_min',
-                  'mileage_max',
+
+        fields = ('id',
+                  'user',
+                  'details',
                   )
+
+    def create(self, validated_data):
+        detail_data = validated_data.pop('details')
+
+        snoop = Snoop.objects.create(**validated_data)
+
+        for detail in detail_data:
+            SnoopDetail.objects.create(**detail, snoop = snoop)
+
+        return snoop
 
 class SnoopSerializerWithCars(serializers.ModelSerializer):
-    cars = _CarSerializer(many=True)
+    cars = CarSerializer(many=True)
 
     class Meta:
         model = Snoop
-        fields = ('pk',
-                  'manufacturer',
-                  'model',
-                  'year_min',
-                  'year_max',
-                  'mileage_min',
-                  'mileage_max',
-                  'cars'
-                  )
+        fields = ('relations',)
 
 
 class _SnoopSerializer(serializers.ModelSerializer):
@@ -63,16 +91,16 @@ class _SnoopSerializer(serializers.ModelSerializer):
         model = Snoop
         fields = ('pk',)
 
-
-class CarSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Car
-        fields = ('pk',
-                  'manufacturer',
-                  'model',
-                  'color',
-                  'year',
-                  'mileage',
-                  )
+#
+# class CarSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = Car
+#         fields = ('pk',
+#                   'manufacturer',
+#                   'model',
+#                   'color',
+#                   'year',
+#                   'mileage',
+#                   )
 
