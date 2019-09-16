@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+DATA_UPLOAD_MAX_NUMBER_FIELDS=2000
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
